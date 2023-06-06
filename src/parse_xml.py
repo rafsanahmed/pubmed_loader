@@ -13,8 +13,9 @@ class PubMedLoader:
         self.output_path = output_path
         self.counter = {}
         
-    def get_input_files(self, input_path):
-        return glob(input_path + "*.xml.gz")
+    def get_input_files(self, input_path, k="23n"):
+        # k is used for keyword to split the filename obtained from pubmed. It's different for each annual baseline
+        return sorted(glob(f'{input_path}*.gz'), key=lambda x: int(os.path.splitext(os.path.basename(x))[0].split(k)[-1][:-4]))
     
     def get_counter(self):
         return self.counter
@@ -41,7 +42,7 @@ class PubMedLoader:
     def write_to_json(self, data, input_file):
         outfile = os.path.join(self.output_path, os.path.basename(input_file.split(".xml")[0])+".json")
         with open(outfile, "w", encoding="utf-8") as f:
-            f.write(json.dumps(d_main, indent=2, ensure_ascii=False))
+            f.write(json.dumps(data, indent=2, ensure_ascii=False))
             
     def run_loader(self):
         input_files_list = self.get_input_files(self.input_path)
