@@ -80,7 +80,7 @@ if __name__ == "__main__":
 
     loader = PubMedLoader(input_path,output_path)
 
-    loader.run_loader(file_limit=[1067,1178])
+    loader.run_loader(file_limit=[1179,1371])
     
     # with open(f"{output_path}counts.txt", "w", encoding="utf-8"):
     #     for k, v in loader.get_counter().items():
