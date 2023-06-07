@@ -13,9 +13,26 @@ class PubMedLoader:
         self.output_path = output_path
         self.counter = {}
         
-    def get_input_files(self, input_path, k="23n"):
+    def get_input_files(self, input_path, file_limit, k="23n"):
         # k is used for keyword to split the filename obtained from pubmed. It's different for each annual baseline
-        return sorted(glob(f'{input_path}*.gz'), key=lambda x: int(os.path.splitext(os.path.basename(x))[0].split(k)[-1][:-4]))
+        input_files = sorted(glob(f'{input_path}*.gz'), key=lambda x: int(os.path.splitext(os.path.basename(x))[0].split(k)[-1][:-4]))
+    
+        if file_limit==None:
+            return input_files
+        elif isinstance(file_limit, list) and len(file_limit)==2:
+            start=file_limit[0]
+            end=file_limit[1]
+
+            filtered_files = []
+            for f in input_files:
+                f_idx = int(os.path.splitext(os.path.basename(f))[0].split(k)[-1][:-4])
+                if f_idx>=start and f_idx<=end:
+                    filtered_files.append(f)
+    
+            return filtered_files
+        else:
+            raise Exception("ERROR: File limit must be in None or [x,y] format where x is lower limit and y is upper limit (both inclusive)")
+        
     
     def get_counter(self):
         return self.counter
@@ -44,8 +61,8 @@ class PubMedLoader:
         with open(outfile, "w", encoding="utf-8") as f:
             f.write(json.dumps(data, indent=2, ensure_ascii=False))
             
-    def run_loader(self):
-        input_files_list = self.get_input_files(self.input_path)
+    def run_loader(self, file_limit=None):
+        input_files_list = self.get_input_files(self.input_path, file_limit=file_limit)
         
         for i, input_file in tqdm(enumerate(input_files_list)):
             
@@ -61,11 +78,11 @@ if __name__ == "__main__":
 
     loader = PubMedLoader(input_path,output_path)
 
-    loader.run_loader()
+    loader.run_loader(file_limit=[1067,1178])
     
-    with open(f"{output_path}counts.txt", "w", encoding="utf-8"):
-        for k, v in loader.get_counter().items():
-            f.write(f"{k}\t{v}\n")
+    # with open(f"{output_path}counts.txt", "w", encoding="utf-8"):
+    #     for k, v in loader.get_counter().items():
+    #         f.write(f"{k}\t{v}\n")
 
 
 
