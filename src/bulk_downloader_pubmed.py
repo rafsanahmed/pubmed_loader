@@ -9,7 +9,7 @@ from tqdm import tqdm, trange
 if __name__ == "__main__":
 
     save_path = "../data/tmp/update_files/"
-    os.makedirs(save_path, exists_ok=True)
+    os.makedirs(save_path, exist_ok=True)
 
     f = open(f"{save_path}err.txt", "w", encoding="utf8")
     for i in trange(1167,1371):
