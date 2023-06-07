@@ -17,7 +17,7 @@ def count_articles(input_path, count_file, k="23n"):
                 full_articles = json.loads(f.read())
         
 
-        count_writer.write(f"{os.path.splitext(os.path.basename(x))[0].split(k)[-1][:-4]}\t{len(full_articles)\n}")
+        count_writer.write(f"{os.path.splitext(os.path.basename(x))[0].split(k)[-1][:-4]}\t{len(full_articles)}\n")
 
     
 
