@@ -44,14 +44,15 @@ class PubMedLoader:
         d_main = {}
         for art in data:
             if "abstract" in art:
-                if len(art["abstract"])>0:
-                    count+=1
-                    pmid = art["pmid"] if "pmid" in art else count_tot
-                    d_main[pmid] = {"title": art["title"],
-                                   "abstract":art["abstract"],
-                                   "mesh_terms":art["mesh_terms"],
-                                   "pubdate":art["pubdate"],
-                                   "chemical_list":art["chemical_list"]}
+                if art["abstract"]!=None:
+                    if len(art["abstract"])>0:
+                        count+=1
+                        pmid = art["pmid"] if "pmid" in art else count_tot
+                        d_main[pmid] = {"title": art["title"],
+                                    "abstract":art["abstract"],
+                                    "mesh_terms":art["mesh_terms"],
+                                    "pubdate":art["pubdate"],
+                                    "chemical_list":art["chemical_list"]}
         
         self.counter[input_file] = count
         return d_main
