@@ -27,7 +27,7 @@ def count_articles(input_path, count_file, k="23n"):
 
 if __name__ == "__main__":
 
-    input_path = "../res/abstracts/"
+    input_path = "../res/abstracts/update_files/"
     output_file = f"{input_path}counts.txt"
 
     count_articles(input_path, count_file=output_file)
