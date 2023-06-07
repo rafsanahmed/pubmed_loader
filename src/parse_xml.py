@@ -3,6 +3,7 @@
 import pubmed_parser as pp
 import os
 import json
+import math
 from glob import glob
 from tqdm import tqdm, trange
 
@@ -44,7 +45,7 @@ class PubMedLoader:
         d_main = {}
         for art in data:
             if "abstract" in art:
-                if art["abstract"]!=None:
+                if isinstance(art["abstract"], str):
                     if len(art["abstract"])>0:
                         count+=1
                         pmid = art["pmid"] if "pmid" in art else count_tot
@@ -73,8 +74,8 @@ class PubMedLoader:
 
 if __name__ == "__main__":
 
-    input_path = "../data/tmp/"
-    output_path = "../res/abstracts/"
+    input_path = "../data/tmp/update_files/"
+    output_path = "../res/abstracts/update_files/"
     os.makedirs(output_path, exist_ok=True)
 
     loader = PubMedLoader(input_path,output_path)
