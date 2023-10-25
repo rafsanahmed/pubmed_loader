@@ -13,6 +13,7 @@ class PubMedLoader:
         self.input_path = input_path
         self.output_path = output_path
         self.counter = {}
+        os.makedirs(output_path, exist_ok=True)
         
     def get_input_files(self, input_path, file_limit, k="23n"):
         # k is used for keyword to split the filename obtained from pubmed. It's different for each annual baseline
@@ -76,7 +77,7 @@ if __name__ == "__main__":
 
     input_path = "../data/tmp/update_files/"
     output_path = "../res/abstracts/update_files/"
-    os.makedirs(output_path, exist_ok=True)
+    
 
     loader = PubMedLoader(input_path,output_path)
 

@@ -3,3 +3,5 @@ res/*
 !data/.gitkeep
 !res/.gitkeep
 .gitignore
+src/.ipynb_checkpoints/Untitled-checkpoint.ipynb
+src/__pycache__/
